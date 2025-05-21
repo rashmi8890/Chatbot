@@ -35,6 +35,12 @@ with st.sidebar:
     else:
         st.write("No conversation yet.")
 
+for message in st.session_state.chat_history:
+    if message["role"] == "user":
+        st.markdown(f"**You:** {message['content']}")
+    else:
+        st.markdown(f"**Chatbot:** {message['content']}")
+
 user_input = st.text_input("You:", key="user_input")
 
 if user_input:
@@ -43,8 +49,4 @@ if user_input:
     response, updated_history = chat_with_gpt(user_input, st.session_state.chat_history)
     st.session_state.chat_history = updated_history
 
-for message in st.session_state.chat_history:
-    if message["role"] == "user":
-        st.markdown(f"**You:** {message['content']}")
-    else:
-        st.markdown(f"**Chatbot:** {message['content']}")
+
