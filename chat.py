@@ -35,18 +35,21 @@ with st.sidebar:
     else:
         st.write("No conversation yet.")
 
+st.markdown("### 💬 Conversation")
 for message in st.session_state.chat_history:
     if message["role"] == "user":
         st.markdown(f"**You:** {message['content']}")
     else:
         st.markdown(f"**Chatbot:** {message['content']}")
 
-user_input = st.text_input("You:", key="user_input")
+# Input and send button in a form
+with st.form(key="chat_form", clear_on_submit=True):
+    user_input = st.text_input("Type your message:", key="user_input_field")
+    submit_button = st.form_submit_button(label="Send")
 
-if user_input:
+# Process input on button click
+if submit_button and user_input:
     st.session_state.chat_history.append({"role": "user", "content": user_input})
-
     response, updated_history = chat_with_gpt(user_input, st.session_state.chat_history)
     st.session_state.chat_history = updated_history
-
 
