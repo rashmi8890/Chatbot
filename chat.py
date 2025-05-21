@@ -1,7 +1,7 @@
 from openai import OpenAI
 import streamlit as st
 client = OpenAI(
-  api_key="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"
+    api_key=st.secrets["openai"]["api_key"]
 )
 
 def chat_with_gpt(prompt, chat_history):
@@ -35,6 +35,7 @@ with st.sidebar:
     else:
         st.write("No conversation yet.")
 
+
 st.markdown("### 💬 Conversation")
 for message in st.session_state.chat_history:
     if message["role"] == "user":
@@ -55,4 +56,3 @@ if submit_button and user_input:
     st.session_state.chat_history.append({"role": "user", "content": user_input})
     response, updated_history = chat_with_gpt(user_input, st.session_state.chat_history)
     st.session_state.chat_history = updated_history
-
