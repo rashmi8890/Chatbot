@@ -37,8 +37,8 @@ if not st.session_state.authenticated:
 
     auth_mode = st.selectbox("Choose Option", ["Sign In", "Sign Up"], key="auth_mode")
 
-    username = st.text_input("Username", key="username")
-    password = st.text_input("Password", type="password", key="password")
+    username = st.text_input("Username", key="login_username")
+    password = st.text_input("Password", type="password", key="login_password")
 
     if auth_mode == "Sign Up":
         name = st.text_input("Full Name", key="fullname")
@@ -50,10 +50,9 @@ if not st.session_state.authenticated:
             user = get_user(username, password)
             if user:
                 st.session_state.authenticated = True
-                st.session_state.username = username
-                st.session_state.name = user[1]
-                st.success(f"Welcome back, {user[1]}!")
-                st.experimental_rerun()
+                st.session_state["username"] = username
+                st.session_state["name"] = user[1]
+                st.rerun() 
             else:
                 st.error("Invalid credentials!")
 
